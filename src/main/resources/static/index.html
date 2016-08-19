@@ -36,8 +36,7 @@
 					</tr>
 				</thead>
 				<tr ng-repeat="player in players | range:from:to ">
-					<td><input type="checkbox" name="selectedBoxes[]" value="{{player.id}}" ng-model="player.checked" ng-change="checkPlayers(player)"></td>
-					<td>{{player.firstname}}</td>
+					<td><input type="checkbox" name="selectedBoxes[]" value="{{player.id}}" ng-model="player.checked" ng-change="checkPlayers(player)">{{player.firstname}}</td>
 					<td>{{player.lastname}}</td>
 					<td>{{player.team}}</td>
 					<td>{{player.leag}}</td>
