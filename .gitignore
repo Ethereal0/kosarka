@@ -1,0 +1,16 @@
+# Eclipse files
+**/.project
+**/.settings/
+**/.classpath
+*.class
+**/target
+**/bin
+**/.springBeans
+Procfile
+
+# IDEA files
+.idea/*
+*.iml
+*.ipr
+*.iws
+*.log
