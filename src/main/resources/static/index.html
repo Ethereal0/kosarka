@@ -17,13 +17,13 @@
 		</center>
 		<div ng-controller="dtApp">
 			<h3>Welcome: {{message.username}}</h3>
+			<a href="#/players">Lista</a>
 			<input type="text" name="username" ng-model="username" /> <input
-				type="button" name="btnUser" value="Dodaj" ng-click="setUser()" /> 
+				type="button" name="btnUser" value="Dodaj" ng-click="setUser()" />
 		</div>
 		<br>
 		<div ng-controller="restserv">
-		<input
-				type="button" ng-click="CreateTeam()" Value="unos">
+			<input type="button" ng-click="CreateTeam()" Value="unos">
 			<table class="table table-bordered" at-table at-paginated
 				at-list="list" at-config="config">
 				<thead>
@@ -36,20 +36,28 @@
 					</tr>
 				</thead>
 				<tr ng-repeat="player in players | range:from:to ">
-					<td><input type="checkbox" name="selectedBoxes[]" value="{{player.id}}" ng-model="player.checked" ng-change="checkPlayers(player)">{{player.firstname}}</td>
+					<td><input type="checkbox" name="selectedBoxes[]"
+						value="{{player.id}}" ng-model="player.checked"
+						ng-change="checkPlayers(player)">{{player.firstname}}</td>
 					<td>{{player.lastname}}</td>
 					<td>{{player.team}}</td>
 					<td>{{player.leag}}</td>
 					<td><span ng-repeat="position in player.pos">{{position}}
 					</span></td>
 				</tr>
-				<button name="nextpage" ng-click="nextPage()"
-					ng-disabled="!hasNextPage">Next Page></button>
-				<button name="prevpage" ng-click="prevPage()"
-					ng-disabled="!hasPrevPage">Previous Page></button>
-				Od:
-				<input type="text" ng-change="strana(page)" ng-model="page" />
-				<p>{{count}}</p>
+				<div class="container" ng-controller="dreamteams">
+
+					<div ng-repeat="team in allteams">
+						<p ng-repeat="player in team.players">
+						{{player.firstname}} 
+						{{player.lastname}}</p>
+					</div>
+					<button name="nextpage" ng-click="nextPage()"
+						ng-disabled="!hasNextPage">Next Page></button>
+					<button name="prevpage" ng-click="prevPage()"
+						ng-disabled="!hasPrevPage">Previous Page></button>
+					Od: <input type="text" ng-change="strana(page)" ng-model="page" />
+					<p>{{count}}</p>
 			</table>
 			<p>{{filtered.length}}</p>
 
@@ -58,5 +66,6 @@
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="dtAppctrl.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 </body>
 </html>

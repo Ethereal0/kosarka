@@ -1,4 +1,4 @@
-var dtAppctrl = angular.module('dtAppctrl', [])
+var dtAppctrl = angular.module('dtAppctrl', [ "ngRoute" ])
 dtAppctrl.controller('dtApp', function($scope, $http) {
 	$http.get('/res').success(function(data) {
 		$scope.message = data;
@@ -8,19 +8,13 @@ dtAppctrl.controller('dtApp', function($scope, $http) {
 			$scope.message = username;
 		})
 	}
-
 });
+
 dtAppctrl.controller('restserv', function($scope, $http, $filter) {
+
 	$scope.team = {
 		players : []
 	};
-
-	// $scope.checkPlayers = function(player){
-	// var index = -1;
-	// var playerId = {playerId:player};
-	// $scope.lista = $filter('filter')($scope.players, {checked: true});
-	// console.log($scope.lista);
-	// }
 	$scope.CreateTeam = function() {
 		$scope.team.name = "Test";
 		$scope.team.userId = 6;
@@ -31,11 +25,13 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 		});
 		if ((filteredPlayers.length != 0) && (filteredPlayers.length <= 5)) {
 			angular.forEach(filteredPlayers, function(player) {
-				$scope.team.players.push({playerId: player.id});
+				$scope.team.players.push({
+					playerId : player.id
+				});
 			});
-		}else if(filteredPlayers.length > 5){
+		} else if (filteredPlayers.length > 5) {
 			console.log('Selektovano je previse igraca');
-		}else{
+		} else {
 			console.log('greska')
 		}
 
@@ -92,6 +88,13 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 			}
 		}
 
+	})
+
+});
+
+dtAppctrl.controller('dreamteams', function($scope, $http) {
+	$http.get('/dreamteams').success(function(allteams) {
+		$scope.teams = allteams;
 	})
 });
 dtAppctrl.filter('range', function() {

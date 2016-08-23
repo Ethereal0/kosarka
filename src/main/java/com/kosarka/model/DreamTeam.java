@@ -3,10 +3,10 @@ package com.kosarka.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,7 +15,9 @@ import javax.persistence.Table;
 public class DreamTeam {
 	@Id
 	@GeneratedValue
+	@Column(name="Dteam_id")
 	private Integer dTeamId;
+	@Column(name="User_id")
 	private Integer userId;
 	private String name;
 	@OneToMany(mappedBy = "dreamTeam", cascade = CascadeType.ALL)

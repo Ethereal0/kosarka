@@ -46,6 +46,4 @@ public class PlayerTeamModel {
 		this.dreamTeam = dreamTeam;
 	}
 	
-
-	
 }

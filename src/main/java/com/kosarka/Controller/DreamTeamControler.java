@@ -1,5 +1,7 @@
 package com.kosarka.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosarka.model.dto.DreamTeamDTO;
+import com.kosarka.model.dto.DreamTeamDetailDTO;
 import com.kosarka.service.DreamTeamService;
 
 @Controller
@@ -23,5 +26,10 @@ public class DreamTeamControler {
 	@RequestMapping(value="/createDreamTeam", method = RequestMethod.POST)
 	public DreamTeamDTO createTeam(@RequestBody DreamTeamDTO dreamTeamDTO){
 		return dreamTeamService.setDreamTeam(dreamTeamDTO);
+	}
+	@ResponseBody
+	@RequestMapping(value="/dreamteams", method = RequestMethod.GET)
+	public List<DreamTeamDetailDTO> getAllTeam(){
+		return dreamTeamService.getAllTeam();
 	}
 }
