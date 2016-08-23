@@ -1,0 +1,20 @@
+<!-- <div ng-repeat="team in teams">
+		<a ng-href="/teams/{{team.dreamTeam.dTeamId}}">{{team.dreamTeam.name}}</a>
+		<p ng-repeat="player in team.players">{{player.firstname}}
+			{{player.lastname}}
+	</div> -->
+	
+		<table class="table table-bordered" at-table at-paginated
+		at-list="list" at-config="config">
+		<thead>
+			<tr>
+				<th>Team name:</th>
+				<th>team efficiency</th>
+			</tr>
+		</thead>
+		<tr ng-repeat="team in teams | orderBy:'-teamEff'">
+			<td><a ng-href="/teams/{{team.dreamTeam.dTeamId}}">{{team.dreamTeam.name}}</a></td>
+			<td ng-model="teameff">{{team.teamEff}}</td>
+			</span></td>
+		</tr>
+	</table>

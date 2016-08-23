@@ -12,6 +12,7 @@ import com.kosarka.model.User;
 import com.kosarka.service.UserService;
 
 @Controller
+@RequestMapping("/api")
 public class UserController {
 	private final UserService userService;
 
