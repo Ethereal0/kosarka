@@ -1,10 +1,38 @@
-var dtAppctrl = angular.module('dtAppctrl', [ "ngRoute" ])
+var dtAppctrl = angular.module("dtAppctrl", [ "ngRoute" ]);
+
+dtAppctrl.config(function($routeProvider, $locationProvider) {
+    $routeProvider
+    .when("/teams", {
+        templateUrl : "partials/dreamteams.html",
+        	controller: "dreamteams"
+    })
+    .when("/teams/:param", {
+        templateUrl : "partials/detailteam.html",
+        	controller: "detailteam"
+    })
+    .when("/players", {
+        templateUrl : "partials/players.html"
+    })
+    .when("/createteam", {
+        templateUrl : "partials/createteam.html"
+    })
+    .when("/blue", {
+        templateUrl : "partials/blue.htm"
+    })
+    .otherwise("/", {
+    	templateUrl : "index.html"
+    });
+    // use the HTML5 History API
+   $locationProvider.html5Mode(true);
+});
+
+
 dtAppctrl.controller('dtApp', function($scope, $http) {
-	$http.get('/res').success(function(data) {
+	$http.get('/api/res').success(function(data) {
 		$scope.message = data;
 	})
 	$scope.setUser = function() {
-		$http.post('/setuser', $scope.username).success(function(username) {
+		$http.post('/api/setuser', $scope.username).success(function(username) {
 			$scope.message = username;
 		})
 	}
@@ -12,11 +40,12 @@ dtAppctrl.controller('dtApp', function($scope, $http) {
 
 dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 
+	
 	$scope.team = {
 		players : []
 	};
 	$scope.CreateTeam = function() {
-		$scope.team.name = "Test";
+		$scope.team.name = $scope.name;
 		$scope.team.userId = 6;
 		$scope.team.players = [];
 		console.log($scope.team.players);
@@ -35,10 +64,10 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 			console.log('greska')
 		}
 
-		$http.post('/createDreamTeam', $scope.team);
+		$http.post('/api/createDreamTeam', $scope.team);
 	}
 
-	$http.get('/players').success(function(restdata) {
+	$http.get('/api/players').success(function(restdata) {
 		$scope.players = restdata.players;
 		$scope.from = 0
 		$scope.to = 50;
@@ -93,10 +122,17 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 });
 
 dtAppctrl.controller('dreamteams', function($scope, $http) {
-	$http.get('/dreamteams').success(function(allteams) {
+	$http.get('/api/dreamteams').success(function(allteams) {
 		$scope.teams = allteams;
 	})
 });
+
+dtAppctrl.controller('detailteam', function($scope, $http, $routeParams) {
+	$http.get('/api/dreamteams/' + $routeParams.param).success(function(team) {
+		$scope.team = team;
+	});
+});
+
 dtAppctrl.filter('range', function() {
 	return function(arr, from, to) {
 		return arr ? arr.slice(from, to) : [];

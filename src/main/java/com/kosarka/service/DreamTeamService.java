@@ -50,24 +50,32 @@ public class DreamTeamService {
 		List<DreamTeamDetailDTO> dreamTeamDetailDTOs = new ArrayList<DreamTeamDetailDTO>();
 		List<DreamTeam> dreamTeamAll = dreamTeamRepository.findAll();
 		for (DreamTeam dt : dreamTeamAll) {
-			DreamTeamDetailDTO dreamTeamDetailDTO = new DreamTeamDetailDTO();
-			dreamTeamDetailDTO.setDreamTeam(jTransfo.convertTo(dt, DreamTeamDTO.class));
-			List<PlayerDTO> players = new ArrayList<PlayerDTO>();
-			int teamEff = 0;
-			for (PlayerTeamModel playerTeam : dt.getPlayers()) {
-				PlayerDTO playerDTO = statsService.findOne(playerTeam.getPlayerId());
-				if  (playerDTO != null) {
-					int playerEff = statsService.setEff(playerDTO);
-					playerDTO.setEff(playerEff);
-					players.add(playerDTO);
-					teamEff += playerEff;
-				}
-			}
-			dreamTeamDetailDTO.setPlayers(players);
-			dreamTeamDetailDTO.setTeamEff(teamEff);
-			dreamTeamDetailDTOs.add(dreamTeamDetailDTO);
+			DreamTeamDetailDTO dreamTeamDto = setTeam(dt);
+			dreamTeamDetailDTOs.add(dreamTeamDto);
 		}
 		return dreamTeamDetailDTOs;
 	}
-
+	public DreamTeamDetailDTO getOne(int id){
+		DreamTeam dreamTeam  = dreamTeamRepository.findOne(id);
+		DreamTeamDetailDTO dreamTeamDto = setTeam(dreamTeam);
+		return dreamTeamDto;
+	}
+	private DreamTeamDetailDTO setTeam(DreamTeam dreamTeam){
+		DreamTeamDetailDTO dreamTeamDetailDTO = new DreamTeamDetailDTO();
+		dreamTeamDetailDTO.setDreamTeam(jTransfo.convertTo(dreamTeam, DreamTeamDTO.class));
+		List<PlayerDTO> players = new ArrayList<PlayerDTO>();
+		int teamEff = 0;
+		for (PlayerTeamModel playerTeam : dreamTeam.getPlayers()) {
+			PlayerDTO playerDTO = statsService.findOne(playerTeam.getPlayerId());
+			if  (playerDTO != null) {
+				int playerEff = statsService.setEff(playerDTO);
+				playerDTO.setEff(playerEff);
+				players.add(playerDTO);
+				teamEff += playerEff;
+			}
+		}
+		dreamTeamDetailDTO.setPlayers(players);
+		dreamTeamDetailDTO.setTeamEff(teamEff);
+		return dreamTeamDetailDTO;
+	}
 }

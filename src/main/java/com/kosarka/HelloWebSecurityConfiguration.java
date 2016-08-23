@@ -22,7 +22,7 @@ public class HelloWebSecurityConfiguration
   protected void configure(HttpSecurity http) throws Exception {
       http.httpBasic().and()
       .authorizeRequests()
-      .antMatchers("/index.html", "/").permitAll()
+      .antMatchers("/index.html", "/", "/partials/**").permitAll()
       .anyRequest().authenticated()
       .and().csrf().disable();
   }
