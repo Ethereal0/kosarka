@@ -14,24 +14,31 @@
 			<tr ng-repeat="player in players | range:from:to ">
 				<td><input type="checkbox" name="selectedBoxes[]"
 					value="{{player.id}}" ng-model="player.checked"
-					ng-change="checkPlayers(player)">{{player.firstname}}</td>
+					ng-disabled="disableSelection() && !player.checked">{{player.firstname}}</td>
 				<td>{{player.lastname}}</td>
 				<td>{{player.team}}</td>
 				<td>{{player.leag}}</td>
 				<td><span ng-repeat="position in player.pos">{{position}}
 				</span></td>
 			</tr>
-			<button name="nextpage" ng-click="nextPage()"
-				ng-disabled="!hasNextPage">Next Page></button>
-			<button name="prevpage" ng-click="prevPage()"
-				ng-disabled="!hasPrevPage">Previous Page></button>
+			<button
+				class="btn btn-lg btn-primary btn-md glyphicon glyphicon-chevron-left"
+				ng-disabled="!hasPrevPage" ng-click="prevPage()" /></button>
+			<button
+				class="btn btn-lg btn-primary btn-md glyphicon glyphicon-chevron-right"
+				ng-disabled="!hasNextPage" ng-click="nextPage()"></button>
 			Od:
-			<input type="text" ng-change="strana(page)" ng-model="page" > / {{count}}</input>
-			<br.
+			<input type="text" ng-change="strana(page)" ng-model="page">
+			/ {{count}}
+			</input>
+			<input type="text" ng-model="name" style="float: right;">
+			<p style="float: right;">Naziv tima:&nbsp</p>
+			<br/>
+			<button class="btn btn-lg btn-primary btn-sm" ng-click="CreateTeam()"
+				style="float: right;">Create team</button>
+			<br>
+			<br>
 		</table>
-		<p>{{filtered.length}}</p>
-		<input type="button" ng-click="CreateTeam()" Value="unos" style="float:right;">
-		Naziv tima: <input type="text" ng-model="name" style="float:right;"> 
-			
+		<br>
 	</div>
 </div>

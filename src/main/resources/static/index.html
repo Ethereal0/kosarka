@@ -1,34 +1,43 @@
 <!doctype html>
-<html lang="en"  ng-app="dtAppctrl">
+<html lang="en" ng-app="dtAppctrl">
 <head>
 <title>Basketball dream team</title>
 <base href="/">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css" type="text/css">
 <style type="text/css">
 [ng\:cloak], [ng-cloak], .ng-cloak {
 	display: none !important;
 }
 </style>
 </head>
-
 <body>
-	<ul class="nav nav-pills" style="float: right;">
-		<li role="presentation"><a ng-href="/">Home</a></li>
-		<li role="presentation"><a ng-href="/teams">Teams</a></li>
-		<li role="presentation"><a ng-href="/createteam">Create team</a></li>
-	</ul>
-	<div class="container">
+	<div class="wide">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<main-menu ng-show="authenticated"></main-menu>
+		</div>
+		<br /> <br />
+	</div>
+
+
+	<div class="container" ng-controller="dtApp">
 		<center>
 			<h1>Basketball dream team</h1>
+			<center>
+				<p>{{message}}</p>
+			</center>
 		</center>
 		<br>
 		<div ng-view></div>
-
 	</div>
+
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-	<script src="dtAppctrl.js"></script>
+	<script src="js/dtAppctrl.js"></script>
 </body>
 </html>

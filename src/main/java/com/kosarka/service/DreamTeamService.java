@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.jtransfo.JTransfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.kosarka.model.DreamTeam;
@@ -15,6 +17,7 @@ import com.kosarka.model.dto.PlayerDTO;
 import com.kosarka.model.dto.PlayerTeamDTO;
 import com.kosarka.repository.DreamTeamRepository;
 import com.kosarka.repository.PlayerRepository;
+import com.kosarka.repository.UserRepository;
 
 @Service
 public class DreamTeamService {
@@ -22,20 +25,22 @@ public class DreamTeamService {
 	private final PlayerRepository playerRepository;
 	private final JTransfo jTransfo;
 	private final StatsService statsService;
+	private final UserRepository userRepository;
 
 	@Autowired
 	public DreamTeamService(DreamTeamRepository dreamTeamRepository, JTransfo jTransfo,
-			PlayerRepository playerRepository, StatsService statsService) {
+			PlayerRepository playerRepository, StatsService statsService, UserRepository userRepository) {
 		this.jTransfo = jTransfo;
 		this.dreamTeamRepository = dreamTeamRepository;
 		this.playerRepository = playerRepository;
 		this.statsService = statsService;
-		
+		this.userRepository = userRepository;
 	}
 
 	public DreamTeamDTO setDreamTeam(DreamTeamDTO dreamTeamDTO) {
-		// dreamTeamDTO.setUserId(5);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		DreamTeam dreamTeam = jTransfo.convertTo(dreamTeamDTO, DreamTeam.class);
+		dreamTeam.setUserId(userRepository.findByUsername(auth.getName()).getUser_id());
 		dreamTeam.setPlayers(null);
 		dreamTeamRepository.save(dreamTeam);
 		for (PlayerTeamDTO playerTeam : dreamTeamDTO.getPlayers()) {

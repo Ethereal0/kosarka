@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kosarka.model.dto.DreamTeamDTO;
 import com.kosarka.model.dto.DreamTeamDetailDTO;
 import com.kosarka.service.DreamTeamService;
+import com.kosarka.service.NewUserService;
 
 @Controller
 @RequestMapping("/api")
@@ -20,7 +21,7 @@ public class DreamTeamControler {
 	private final DreamTeamService dreamTeamService;
 	
 	@Autowired
-	public DreamTeamControler(DreamTeamService dreamTeamService){
+	public DreamTeamControler(DreamTeamService dreamTeamService, NewUserService newUserService){
 		this.dreamTeamService = dreamTeamService;
 	}
 	
@@ -29,6 +30,7 @@ public class DreamTeamControler {
 	public DreamTeamDTO createTeam(@RequestBody DreamTeamDTO dreamTeamDTO){
 		return dreamTeamService.setDreamTeam(dreamTeamDTO);
 	}
+
 	@ResponseBody
 	@RequestMapping(value="/dreamteams", method = RequestMethod.GET)
 	public List<DreamTeamDetailDTO> getAllTeam(){
