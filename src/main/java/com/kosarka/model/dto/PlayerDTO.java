@@ -1,5 +1,7 @@
 package com.kosarka.model.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlayerDTO {
@@ -14,6 +16,9 @@ public class PlayerDTO {
 	private String team;
 	
 	private String leag;
+	
+	@JsonProperty(value="pos")
+	private List<String> position;
 
 	@JsonProperty(value="gp")
 	private int gamesPlayed;

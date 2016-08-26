@@ -30,34 +30,34 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-	{
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			User user = userRepository.findByUsername(username);
-			if(user == null){
+			if (user == null) {
 				LOGGER.debug("User not found");
 			}
 			LOGGER.debug("User:" + user.toString());
-			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
-		}catch (Exception e){  
-            throw new UsernameNotFoundException("User not found");  
-        }  
+			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+					getAuthorities(user));
+		} catch (Exception e) {
+			throw new UsernameNotFoundException("User not found");
+		}
 	}
-	
-    private Set<GrantedAuthority> getAuthorities(User user){  
-        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();  
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole());  
-        authorities.add(grantedAuthority);  
-        
-        LOGGER.debug("user authorities are " + authorities.toString());  
-        return authorities;  
-    }  
-    
+
+	private Set<GrantedAuthority> getAuthorities(User user) {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole());
+		authorities.add(grantedAuthority);
+
+		LOGGER.debug("user authorities are " + authorities.toString());
+		return authorities;
+	}
+
 	public User getById(Integer User_id) {
 		User user = userRepository.findOne(User_id);
 		return user;
 	}
-	
+
 	public User getByUsername(String username) {
 		User user = userRepository.findByUsername(username);
 		return user;

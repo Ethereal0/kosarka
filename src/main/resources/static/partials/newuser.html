@@ -1,32 +1,11 @@
-
-<!--     <div class="container" ng-controller="navigation"> -->
-
-<!--       <form class="form-signin" ng-submit="login()"> -->
-<!--         <h2 class="form-signin-heading">Please sign in</h2> -->
-<!--         <label for="inputEmail" class="sr-only">Username</label> -->
-<!--         <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus ng-model="credentials.username"> -->
-<!--         <label for="inputPassword" class="sr-only">Password</label> -->
-<!--         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus ng-model="credentials.password" > -->
-<!--         <div class="checkbox"> -->
-<!--           <label> -->
-<!--             <input type="checkbox" value="remember-me"> Remember me -->
-<!--           </label> -->
-<!--         </div> -->
-<!--         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
-<!--       </form> -->
-
-<!--     </div> /container -->
-
-
-<!--     IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<!--     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 <div ng-controller="newuser"></div>
-<div class="alert alert-danger" ng-show="error">
-	There was a problem logging in. Please try again.
+<div class="alert alert-success" ng-if="success">
+	User is registered!
 </div>
 <div ng-if="errors">
-	<p ng-repeat="error in errors">{{error.code}}</p>
+	<div ng-repeat="error in errors"  class="alert alert-danger">{{error.code}}</div>
 </div>
+
 <form role="form" ng-submit="createUser()">
 	<div class="form-group">
 		<label for="username">Username:</label> <input type="text"
@@ -38,6 +17,8 @@
 			<input type="password"
 			class="form-control" id="confirmPassword" name="confirmPassword" ng-model="confirmPassword"/>
 	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-primary">Register</button> or <a href="/login">Login</a>
+	
+
 </form>
 </div>

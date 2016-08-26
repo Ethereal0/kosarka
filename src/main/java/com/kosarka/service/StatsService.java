@@ -21,25 +21,29 @@ import com.kosarka.model.dto.StatsDTO;
 public class StatsService {
 
 	public List<PlayerDTO> stats;
+
 	public StatsService() throws JsonParseException, JsonMappingException, IOException {
 		this.stats = getStats();
 	}
-	
-	public List<PlayerDTO> getStats() throws JsonParseException, JsonMappingException, IOException{
+
+	public List<PlayerDTO> getStats() throws JsonParseException, JsonMappingException, IOException {
 		RestTemplate restTemplate = new RestTemplate();
-		
-		ResponseEntity<StatsDTO> response = restTemplate.
-				exchange("http://localhost:8888/api/stats", HttpMethod.GET, null, new ParameterizedTypeReference<StatsDTO>(){});
+
+		ResponseEntity<StatsDTO> response = restTemplate.exchange("http://localhost:8888/api/stats", HttpMethod.GET,
+				null, new ParameterizedTypeReference<StatsDTO>() {
+				});
 
 		return response.getBody().getPlayers();
 	}
-	
-	public PlayerDTO findOne(String playerId){
+
+	public PlayerDTO findOne(String playerId) {
 		return this.stats.stream().filter(player -> player.getId().equals(playerId)).findFirst().orElse(null);
 	}
-	
-	public int setEff(PlayerDTO playerDTO){
-		return playerDTO.getPoints() + playerDTO.getRebounds() + playerDTO.getAssists() + playerDTO.getSteals() + playerDTO.getBlock() - ((playerDTO.getFgAttemp() - playerDTO.getFgMade()) + (playerDTO.getFtAttemp() - playerDTO.getFtMade()) + playerDTO.getTurnOver());
-			
+
+	public int setEff(PlayerDTO playerDTO) {
+		return playerDTO.getPoints() + playerDTO.getRebounds() + playerDTO.getAssists() + playerDTO.getSteals()
+				+ playerDTO.getBlock() - ((playerDTO.getFgAttemp() - playerDTO.getFgMade())
+						+ (playerDTO.getFtAttemp() - playerDTO.getFtMade()) + playerDTO.getTurnOver());
+
 	}
 }

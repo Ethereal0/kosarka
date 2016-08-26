@@ -10,7 +10,7 @@
 		<tr>
 			<th>Player last name</th>
 			<th>Player first name</th>
-			<th>Player leag</th>
+			<th>Player position</th>
 			<th>games played</th>
 			<th>minutes</th>
 			<th>points</th>
@@ -28,7 +28,9 @@
 	<tr ng-repeat="player in team.players">
 		<td>{{player.firstname}}</td>
 		<td>{{player.lastname}}</td>
-		<td>{{player.leag}}</td>
+	    <td><span ng-repeat="position in player.pos">{{position}}
+	    
+	    </span></td>
 		<td>{{player.gp}}</td>
 		<td>{{player.min}}</td>
 		<td>{{player.pts}}</td>

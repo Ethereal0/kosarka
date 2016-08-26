@@ -25,9 +25,10 @@ dtAppctrl
 		});
 
 dtAppctrl.run(function($rootScope, $location) {
-	if ($rootScope.authenticated) {
+	if ($location.path() === "/register" && !$rootScope.authenticated) {
+		return;
+	} else if ($rootScope.authenticated) {
 		$location.path("/");
-
 	} else {
 		$location.path("/login");
 	}
@@ -77,10 +78,6 @@ dtAppctrl.controller('navigation', function($rootScope, $scope, $http,
 });
 
 dtAppctrl.controller('dtApp', function($scope, $http) {
-	// $http.get('/api/res').success(function(data) {
-	// $scope.message = data;
-	// })
-
 });
 
 dtAppctrl.controller('restserv', function($scope, $http, $filter) {
@@ -97,14 +94,6 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 	var filteredPlayers = $filter('filter')($scope.players, {
 		checked : true
 	});
-
-	// for (var i = 0; i < 100; i++) {
-	// $scope.team.players.push({
-	// playerId : player.id,
-	// winner : false
-	// });
-	// }
-
 	$scope.disableSelection = function() {
 		var filteredPlayers = $filter('filter')($scope.players, {
 			checked : true
@@ -125,7 +114,12 @@ dtAppctrl.controller('restserv', function($scope, $http, $filter) {
 				playerId : player.id
 			});
 		});
-		$http.post('/api/createDreamTeam', $scope.team);
+		$scope.success = true;
+		delete $scope.errors;
+		$http.post('/api/createDreamTeam', $scope.team).error(function(data) {
+			delete $scope.success;
+			$scope.errors = data;
+		});
 	}
 
 	$http.get('/api/players').success(function(restdata) {
@@ -205,6 +199,7 @@ dtAppctrl.controller('newuser', function($scope, $http) {
 			$scope.password = userdata;
 			$scope.role = "ROLE_ADMIN";
 			$scope.confirmPassword = userdata;
+			$scope.success = true;
 		}).error(function(data) {
 			$scope.errors = data;
 		});
@@ -220,6 +215,16 @@ dtAppctrl.filter('range', function() {
 dtAppctrl.directive('mainMenu', function() {
 	return {
 		restrict : "E",
-		templateUrl : "/partials/menu.html"
+		templateUrl : "/partials/menu.html",
+		controller: function($rootScope, $scope, $http, $location) {
+			$scope.logout = function() {
+			  $http.post('logout', {}).success(function() {
+			    $rootScope.authenticated = false;
+			    $location.path("/login");
+			  }).error(function(data) {
+			    $rootScope.authenticated = false;
+			  });
+			}
+		}
 	};
 })

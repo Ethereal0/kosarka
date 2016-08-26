@@ -1,5 +1,8 @@
 <div ng-controller="dtApp">
 	<div ng-controller="restserv">
+		<div class="alert alert-danger" ng-show="errors">Team already exists with that name</div>
+		<div class="alert alert-success" ng-if="success">Team is successfully created</div>
+	
 		<table class="table table-bordered" at-table at-paginated
 			at-list="list" at-config="config">
 			<thead>
@@ -33,9 +36,9 @@
 			</input>
 			<input type="text" ng-model="name" style="float: right;">
 			<p style="float: right;">Naziv tima:&nbsp</p>
-			<br/>
-			<button class="btn btn-lg btn-primary btn-sm" ng-click="CreateTeam()"
-				style="float: right;">Create team</button>
+			<br />
+			<button class="btn btn-lg btn-success btn-sm" ng-click="CreateTeam()"
+				style="float: right;" ng-href="/teams" ng-disabled="!name"><i class="glyphicon glyphicon-ok"></i>Create team</button>
 			<br>
 			<br>
 		</table>

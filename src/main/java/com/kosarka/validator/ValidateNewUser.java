@@ -23,15 +23,15 @@ public class ValidateNewUser implements Validator {
     public void validate(Object obj, Errors e) {
         NewUserDTO u = (NewUserDTO) obj;
         if (u.getUsername() == null || u.getUsername().isEmpty()) {
-            e.rejectValue("username", "username prazan");
+            e.rejectValue("username", "Username field is empty!");
         } else if (u.getPassword() == null || u.getPassword().isEmpty()) {
-            e.rejectValue("password", "PasswordEmpty");
+            e.rejectValue("password", "Password field is empty!");
         } else if (u.getConfirmPassword() == null || u.getConfirmPassword().isEmpty()) {
-            e.rejectValue("confirmPassword", "ConfirmPassworEmpty");
+            e.rejectValue("confirmPassword", "Confirm password field is empty!");
         } else if (userService.getByUsername(u.getUsername()) != null) { 
-            e.rejectValue("username", "EXIST");
+            e.rejectValue("username", "User already exist!");
         } else if (!u.getPassword().equals(u.getConfirmPassword())) {
-            e.rejectValue("password", "negativevalue");
+            e.rejectValue("password", "Password does not match the confirm password!");
         } 
     }
 }

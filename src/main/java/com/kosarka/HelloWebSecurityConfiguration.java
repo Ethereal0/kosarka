@@ -20,20 +20,6 @@ import com.kosarka.service.UserService;
 @Configuration
 @EnableWebSecurity
 public class HelloWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-/*	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-	protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	  @Override
-	  protected void configure(HttpSecurity http) throws Exception {
-	    http
-	      .httpBasic().and()
-	      .authorizeRequests()
-	        .antMatchers("/index.html", "/login.html", "/").permitAll().anyRequest()
-	        .authenticated().and()
-	      .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
-	  }
-	}*/
-
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -49,25 +35,11 @@ public class HelloWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//	http.authorizeRequests().antMatchers("/index.html", "/partials/**", "/css/**", "/js/**","/api/newuser", "/register").permitAll().and()
-//		.authorizeRequests().anyRequest().authenticated()
-//		.and().formLogin().loginPage("/login").permitAll()
-//		.and().logout()
-//		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-//	.and()
-//	 .csrf().csrfTokenRepository(csrfTokenRepository());
-//	.csrf().disable();
-		// @formatter:off
-		http
-			.httpBasic().and()
-			.authorizeRequests()
-				.antMatchers("/login", "/partials/**", "/css/**", "/js/**","/api/newuser", "/register").permitAll().and()
-				.authorizeRequests().anyRequest().authenticated().and()
-				.formLogin().loginPage("/login").permitAll()
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
-				.csrf().disable();
-			    //.csrf().csrfTokenRepository(csrfTokenRepository());
+		http.httpBasic().and().authorizeRequests()
+				.antMatchers("/", "/index.html","/login", "/partials/**", "/css/**", "/js/**", "/api/newuser", "/register").permitAll()
+				.and().authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login")
+				.permitAll().and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login").and().csrf().disable();
 	}
 
 	private CsrfTokenRepository csrfTokenRepository() {

@@ -17,18 +17,17 @@ public class Application {
 	@Controller
 	static class Routes {
 
-		@RequestMapping(value = { "/", "/login", "/teams", "/teams/*","/players","/createteam","/register"})
+		@RequestMapping(value = { "/", "/login", "/teams", "/teams/*", "/players", "/createteam", "/register"})
 		public String index() {
 			return "forward:index.html";
 		}
 
 	}
 
-	  @RequestMapping("/user")
-	  public Principal user(Principal user) {
-	    return user;
-	  }
-
+	@RequestMapping("/user")
+	public Principal user(Principal user) {
+		return user;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

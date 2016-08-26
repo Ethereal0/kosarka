@@ -65,6 +65,10 @@ public class DreamTeamService {
 		DreamTeamDetailDTO dreamTeamDto = setTeam(dreamTeam);
 		return dreamTeamDto;
 	}
+	public DreamTeamDTO getByName(String name){
+		DreamTeam dreamTeam  = dreamTeamRepository.findByName(name);
+		return dreamTeam != null ? jTransfo.convertTo(dreamTeam, DreamTeamDTO.class) : null;
+	}
 	private DreamTeamDetailDTO setTeam(DreamTeam dreamTeam){
 		DreamTeamDetailDTO dreamTeamDetailDTO = new DreamTeamDetailDTO();
 		dreamTeamDetailDTO.setDreamTeam(jTransfo.convertTo(dreamTeam, DreamTeamDTO.class));
